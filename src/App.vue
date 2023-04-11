@@ -17,9 +17,12 @@ const authStore = useAuthStore();
                 <RouterLink to="/cadastro" class="nav-item nav-link">
                     Cadastro
                 </RouterLink>
-                <a @click="authStore.logout()" class="nav-item nav-link"
-                    >Logout</a
-                >
+                <RouterLink to="/pacientes" class="nav-item nav-link">
+                    Pacientes
+                </RouterLink>
+                <a @click="authStore.logout()" class="nav-item nav-link">
+                    Logout
+                </a>
             </div>
         </nav>
         <div class="container pt-4 pb-4">

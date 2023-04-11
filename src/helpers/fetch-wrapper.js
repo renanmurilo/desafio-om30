@@ -31,7 +31,6 @@ function authHeader(url) {
 
     const isApiUrl = url.startsWith(import.meta.env.VITE_API_URL);
     if (isLoggedIn && isApiUrl) {
-        console.log(`Bearer ${user?.data?.idToken}`);
         return { Authorization: `Bearer ${user?.data?.idToken}` };
     } else {
         return {};

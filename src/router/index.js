@@ -12,7 +12,8 @@ const router = createRouter({
       name: 'home',
       component: HomeView,
       children: [
-        {path: '/cadastro', name: 'cadastro', component: () => import('@/components/Cadastro.vue'), }
+        { path: '/cadastro', name: 'cadastro', component: () => import('@/components/Cadastro.vue'), },
+        { path: '/pacientes', name: 'pacientes', component: () => import('@/components/Pacientes.vue'), },
       ]
     },
     {
