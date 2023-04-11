@@ -14,6 +14,9 @@ const authStore = useAuthStore();
         >
             <div class="navbar-nav">
                 <RouterLink to="/" class="nav-item nav-link">Home</RouterLink>
+                <RouterLink to="/cadastro" class="nav-item nav-link">
+                    Cadastro
+                </RouterLink>
                 <a @click="authStore.logout()" class="nav-item nav-link"
                     >Logout</a
                 >
