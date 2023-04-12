@@ -1,30 +1,11 @@
 <script setup>
-import { RouterLink, RouterView } from 'vue-router';
-
-import { useAuthStore } from '@/stores';
-
-const authStore = useAuthStore();
+import Header from '@/components/Header.vue';
 </script>
 
 <template>
     <div class="app-container bg-light">
-        <nav
-            v-show="authStore.user"
-            class="navbar navbar-expand navbar-dark bg-dark"
-        >
-            <div class="navbar-nav">
-                <RouterLink to="/" class="nav-item nav-link">Home</RouterLink>
-                <RouterLink to="/cadastro" class="nav-item nav-link">
-                    Cadastro
-                </RouterLink>
-                <RouterLink to="/pacientes" class="nav-item nav-link">
-                    Pacientes
-                </RouterLink>
-                <a @click="authStore.logout()" class="nav-item nav-link">
-                    Logout
-                </a>
-            </div>
-        </nav>
+        <Header />
+
         <div class="container pt-4 pb-4">
             <RouterView />
         </div>
