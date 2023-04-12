@@ -2,6 +2,7 @@
 import { Form, Field } from 'vee-validate';
 import * as Yup from 'yup';
 import { reactive } from 'vue';
+import api from '@/api/axios';
 
 import { createPaciente } from '@/stores';
 
@@ -34,7 +35,6 @@ const paciente = reactive({
 
 function handleFileUpload(event) {
     const file = event.target.files[0];
-    console.log(file);
 
     const reader = new FileReader();
     reader.onload = () => {
@@ -44,9 +44,22 @@ function handleFileUpload(event) {
     reader.readAsDataURL(file);
 }
 
+async function validarCep() {
+    const cep = paciente.cep.replace('-', '');
+
+    const { data } = await api.get(`https://viacep.com.br/ws/${cep}/json/`);
+
+    if (data.erro) {
+        alert(data.erro);
+    } else {
+        paciente.rua = data.logradouro;
+        paciente.bairro = data.bairro;
+        paciente.cidade = data.localidade;
+    }
+}
+
 function onSubmit(values, { setErrors }) {
     const createStore = createPaciente();
-    console.log(paciente);
 
     return createStore
         .register(paciente)
@@ -140,6 +153,7 @@ function onSubmit(values, { setErrors }) {
                             class="form-control"
                             v-mask="'00000-000'"
                             v-model="paciente.cep"
+                            @change="validarCep"
                             :class="{ 'is-invalid': errors.cep }"
                         />
                         <div class="invalid-feedback">{{ errors.cep }}</div>
@@ -152,6 +166,7 @@ function onSubmit(values, { setErrors }) {
                             type="text"
                             class="form-control"
                             v-model="paciente.rua"
+                            disabled
                             :class="{ 'is-invalid': errors.rua }"
                         />
                         <div class="invalid-feedback">{{ errors.rua }}</div>
@@ -164,6 +179,7 @@ function onSubmit(values, { setErrors }) {
                             type="text"
                             class="form-control"
                             v-model="paciente.bairro"
+                            disabled
                             :class="{ 'is-invalid': errors.bairro }"
                         />
                         <div class="invalid-feedback">{{ errors.bairro }}</div>
@@ -176,6 +192,7 @@ function onSubmit(values, { setErrors }) {
                             type="text"
                             class="form-control"
                             v-model="paciente.cidade"
+                            disabled
                             :class="{ 'is-invalid': errors.cidade }"
                         />
                         <div class="invalid-feedback">{{ errors.cidade }}</div>

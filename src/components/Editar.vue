@@ -2,12 +2,12 @@
 import { Form, Field } from 'vee-validate';
 import * as Yup from 'yup';
 import { reactive } from 'vue';
+import api from '@/api/axios';
 
 const imagem = reactive({ image: '' });
 
 function handleFileUpload(event) {
     const file = event.target.files[0];
-    console.log(file);
 
     const reader = new FileReader();
     reader.onload = () => {
@@ -38,6 +38,21 @@ const schema = Yup.object().shape({
     bairro: Yup.string().required('bairro is required'),
     cidade: Yup.string().required('estado is required'),
 });
+
+async function validarCep() {
+    console.log(user._object.user.cep);
+    const cep = user._object.user.cep.replace('-', '');
+
+    const { data } = await api.get(`https://viacep.com.br/ws/${cep}/json/`);
+
+    if (data.erro) {
+        alert(data.erro);
+    } else {
+        user._object.user.rua = data.logradouro;
+        user._object.user.bairro = data.bairro;
+        user._object.user.cidade = data.localidade;
+    }
+}
 
 function editaPaciente(values, { setErrors }) {
     const editarStore = editarPaciente();
@@ -142,6 +157,7 @@ function editaPaciente(values, { setErrors }) {
                             class="form-control"
                             v-model="user.cep"
                             v-mask="'00000-000'"
+                            @change="validarCep"
                             :class="{ 'is-invalid': errors.cep }"
                         />
                         <div class="invalid-feedback">{{ errors.cep }}</div>
@@ -154,6 +170,7 @@ function editaPaciente(values, { setErrors }) {
                             type="text"
                             class="form-control"
                             v-model="user.rua"
+                            disabled
                             :class="{ 'is-invalid': errors.rua }"
                         />
                         <div class="invalid-feedback">{{ errors.rua }}</div>
@@ -166,6 +183,7 @@ function editaPaciente(values, { setErrors }) {
                             type="text"
                             class="form-control"
                             v-model="user.bairro"
+                            disabled
                             :class="{ 'is-invalid': errors.bairro }"
                         />
                         <div class="invalid-feedback">{{ errors.bairro }}</div>
@@ -178,6 +196,7 @@ function editaPaciente(values, { setErrors }) {
                             type="text"
                             class="form-control"
                             v-model="user.cidade"
+                            disabled
                             :class="{ 'is-invalid': errors.cidade }"
                         />
                         <div class="invalid-feedback">{{ errors.cidade }}</div>
