@@ -14,6 +14,7 @@ const router = createRouter({
       children: [
         { path: '/cadastro', name: 'cadastro', component: () => import('@/components/Cadastro.vue'), },
         { path: '/pacientes', name: 'pacientes', component: () => import('@/components/Pacientes.vue'), },
+        { path: '/editar/:id', name: 'editar', component: () => import('@/components/Editar.vue'), },
       ]
     },
     {

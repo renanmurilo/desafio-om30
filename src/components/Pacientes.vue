@@ -54,6 +54,9 @@ export default {
                 alert(error);
             }
         },
+        editar(id) {
+            this.$router.push(`/editar/${id}`);
+        },
     },
 };
 </script>
@@ -90,7 +93,10 @@ export default {
                 <a @click.stop.prevent="remove(paciente.uid)" class="remove">
                     <Trash />
                 </a>
-                <a href="" class="edit">edit</a>
+
+                <a @click.stop.prevent="editar(paciente.uid)" class="edit">
+                    edit
+                </a>
             </div>
         </div>
     </div>
