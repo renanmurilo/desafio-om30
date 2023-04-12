@@ -19,7 +19,7 @@ const authStore = useAuthStore();
                 </router-link>
 
                 <a @click="authStore.logout()" class="nav-item nav-link">
-                    Logout
+                    Sair
                 </a>
             </div>
         </nav>
@@ -34,6 +34,7 @@ header {
         padding: 1rem;
         max-width: 70%;
         margin: 2rem auto;
+        position: relative;
 
         @media ($mobile) {
             max-width: 100%;
@@ -52,6 +53,11 @@ header {
 
             &.active {
                 font-weight: 700;
+            }
+
+            &:last-child {
+                position: absolute;
+                right: 0;
             }
         }
     }

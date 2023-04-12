@@ -50,6 +50,7 @@ export default {
                 await api.delete(`rest/collections/Pacientes/${id}`);
 
                 alert('removido com sucesso');
+                this.getPacientes();
             } catch (error) {
                 alert(error);
             }

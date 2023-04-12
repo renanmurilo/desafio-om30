@@ -13,6 +13,7 @@ export const createPaciente = defineStore({
                 )
 
                 alert('Sucesso')
+                location.href = '/pacientes'
             } catch (error) {
                 console.log(error);
             }
