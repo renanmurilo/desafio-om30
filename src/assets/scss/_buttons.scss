@@ -1,0 +1,28 @@
+.btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 9.375rem;
+    border-radius: 7px;
+    border: none;
+    height: 43px;
+    background-color: transparent;
+    @include font-roboto(1rem, 700, 0);
+    transition: all .4s;
+
+    &__primary {
+        background-color: $primary;
+        color: $white;
+
+        @media ($tabletMin) {
+            &:hover {
+                opacity: .7;
+                transition: all .4s;
+            }
+        }
+
+        @media ($mobile) {
+            width: 100%;
+        }
+    }
+}

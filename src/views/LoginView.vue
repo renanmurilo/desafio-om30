@@ -20,17 +20,19 @@ function onSubmit(values, { setErrors }) {
 </script>
 
 <template>
-    <div>
-        <div class="alert alert-info">
-            email: test<br />
-            Password: test
+    <div class="shell">
+        <div class="alert-info">
+            <p>E-mail: renanmurilosantosg@gmail.com</p>
+            <p>Password: 123456</p>
         </div>
-        <h2 class="text-center">Login</h2>
+
+        <h1 class="text-center">Login</h1>
+
         <Form
             @submit="onSubmit"
             :validation-schema="schema"
             v-slot="{ errors, isSubmitting }"
-            class="col-sm-4 container"
+            class="form__class"
         >
             <div class="form-group">
                 <label>email</label>
@@ -54,11 +56,7 @@ function onSubmit(values, { setErrors }) {
                 <div class="invalid-feedback">{{ errors.password }}</div>
             </div>
             <div class="form-group">
-                <button class="btn btn-primary" :disabled="isSubmitting">
-                    <span
-                        v-show="isSubmitting"
-                        class="spinner-border spinner-border-sm mr-1"
-                    ></span>
+                <button class="btn btn__primary" :disabled="isSubmitting">
                     Login
                 </button>
             </div>
@@ -68,3 +66,75 @@ function onSubmit(values, { setErrors }) {
         </Form>
     </div>
 </template>
+
+<style lang="scss">
+.alert-info {
+    background-color: $background;
+    border-radius: 0.75rem;
+    padding: 1rem;
+    @include font-roboto(1rem, 400);
+    color: $primary;
+    max-width: 50%;
+    margin: 2rem auto;
+
+    @media ($mobile) {
+        max-width: 90%;
+    }
+}
+
+.text-center {
+    @include font-roboto(1.5rem, 700);
+    text-transform: uppercase;
+    text-align: center;
+    color: $primary;
+}
+
+.form__class {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 1rem auto;
+
+    .form-group {
+        display: flex;
+        flex-direction: column;
+        width: 18.75rem;
+        margin-bottom: 2rem;
+
+        @media ($mobile) {
+            margin-bottom: 1rem;
+        }
+
+        label {
+            @include font-roboto(1rem, 400);
+            color: $primary;
+            text-transform: capitalize;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-control {
+            height: 2.5rem;
+            border-radius: 0.5rem;
+            border: 2px solid $background;
+            padding: 0 0.7rem;
+
+            &.is-invalid {
+                border-color: $red;
+            }
+        }
+
+        .invalid-feedback {
+            @include font-roboto(0.75rem, 400);
+            color: $red;
+            margin-top: 0.5rem;
+        }
+
+        .btn__primary {
+            &[disabled] {
+                opacity: 0.7;
+            }
+        }
+    }
+}
+</style>
