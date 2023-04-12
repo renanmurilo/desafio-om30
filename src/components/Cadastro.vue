@@ -1,8 +1,9 @@
 <script setup>
 import { Form, Field } from 'vee-validate';
 import * as Yup from 'yup';
-import { reactive } from 'vue';
+import { reactive, ref } from 'vue';
 import api from '@/api/axios';
+import { useCPF } from '@/utils/ComposableCpf.js';
 
 import { createPaciente } from '@/stores';
 
@@ -39,9 +40,16 @@ function handleFileUpload(event) {
     const reader = new FileReader();
     reader.onload = () => {
         paciente.image = reader.result;
-        // Use a imagem carregada aqui
     };
     reader.readAsDataURL(file);
+}
+
+const cpfDemo = useCPF();
+
+const validCpf = ref(true);
+
+function validCPF() {
+    validCpf.value = cpfDemo.isValidCPF(paciente.cpf);
 }
 
 async function validarCep() {
@@ -128,9 +136,13 @@ function onSubmit(values, { setErrors }) {
                             class="form-control"
                             v-mask="'000.000.000-00'"
                             v-model="paciente.cpf"
-                            :class="{ 'is-invalid': errors.cpf }"
+                            @change="validCPF"
+                            :class="{ 'is-invalid': errors.cpf || !validCpf }"
                         />
                         <div class="invalid-feedback">{{ errors.cpf }}</div>
+                        <div class="invalid-feedback" v-if="!validCpf">
+                            cpf inválido
+                        </div>
                     </div>
 
                     <div class="form-group">

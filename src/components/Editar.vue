@@ -1,8 +1,11 @@
 <script setup>
 import { Form, Field } from 'vee-validate';
 import * as Yup from 'yup';
-import { reactive } from 'vue';
+import { reactive, ref } from 'vue';
 import api from '@/api/axios';
+import { storeToRefs } from 'pinia';
+import { useUsersStore, editarPaciente } from '@/stores';
+import { useCPF } from '@/utils/ComposableCpf.js';
 
 const imagem = reactive({ image: '' });
 
@@ -12,14 +15,17 @@ function handleFileUpload(event) {
     const reader = new FileReader();
     reader.onload = () => {
         imagem.image = reader.result;
-        // Use a imagem carregada aqui
     };
     reader.readAsDataURL(file);
 }
 
-import { storeToRefs } from 'pinia';
+const cpfDemo = useCPF();
 
-import { useUsersStore, editarPaciente } from '@/stores';
+const validCpf = ref(true);
+
+function validCPF() {
+    validCpf.value = cpfDemo.isValidCPF(user._object.user.cpf);
+}
 
 const usersStore = useUsersStore();
 const { user } = storeToRefs(usersStore);
@@ -131,10 +137,14 @@ function editaPaciente(values, { setErrors }) {
                             type="text"
                             class="form-control"
                             v-model="user.cpf"
+                            @change="validCPF"
                             v-mask="'000.000.000-00'"
-                            :class="{ 'is-invalid': errors.cpf }"
+                            :class="{ 'is-invalid': errors.cpf || !validCpf }"
                         />
                         <div class="invalid-feedback">{{ errors.cpf }}</div>
+                        <div class="invalid-feedback" v-if="!validCpf">
+                            cpf inválido
+                        </div>
                     </div>
 
                     <div class="form-group">
