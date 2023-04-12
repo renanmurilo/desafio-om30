@@ -35,6 +35,11 @@
   dependencies:
     regenerator-runtime "^0.13.11"
 
+"@devindex/vue-mask@^2.0.3":
+  version "2.0.3"
+  resolved "https://registry.npmjs.org/@devindex/vue-mask/-/vue-mask-2.0.3.tgz"
+  integrity sha512-zOVSHVhuV4NkCVTDsyInmBWNS1JvrwevU2QguNzXxe0DDowNp+3MCkVGYdmJtpZ63wRHFiU3YTQsBjCJBOYN2A==
+
 "@esbuild/android-arm64@0.17.15":
   version "0.17.15"
   resolved "https://registry.yarnpkg.com/@esbuild/android-arm64/-/android-arm64-0.17.15.tgz#893ad71f3920ccb919e1757c387756a9bca2ef42"

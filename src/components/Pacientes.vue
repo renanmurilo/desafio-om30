@@ -84,21 +84,28 @@ export default {
                         v-for="(paciente, index) in filteredClients"
                         :key="index"
                     >
-                        <h3>{{ paciente.attributes.name }}</h3>
+                        <div class="infos">
+                            <div class="image">
+                                <img :src="paciente.attributes.image" alt="" />
+                            </div>
+                            <h3>{{ paciente.attributes.name }}</h3>
+                        </div>
 
-                        <a
-                            @click.stop.prevent="remove(paciente.uid)"
-                            class="remove"
-                        >
-                            <Trash /> <span>Excluir</span>
-                        </a>
+                        <div class="buttons">
+                            <a
+                                @click.stop.prevent="remove(paciente.uid)"
+                                class="remove"
+                            >
+                                <Trash /> <span>Excluir</span>
+                            </a>
 
-                        <a
-                            @click.stop.prevent="editar(paciente.uid)"
-                            class="btn btn__primary"
-                        >
-                            Editar
-                        </a>
+                            <a
+                                @click.stop.prevent="editar(paciente.uid)"
+                                class="btn btn__primary"
+                            >
+                                Editar
+                            </a>
+                        </div>
                     </div>
                 </div>
 
@@ -162,12 +169,27 @@ export default {
             .grid {
                 width: 28%;
                 border: 1px solid $background;
-                height: 150px;
+                height: 9.375rem;
                 padding: 1rem;
                 position: relative;
                 margin-right: 5rem;
                 border-radius: 0.5rem;
                 margin-bottom: 2rem;
+
+                .infos {
+                    display: flex;
+
+                    .image {
+                        width: 3.125rem;
+                        height: 3.125rem;
+                        margin-right: 1rem;
+
+                        img {
+                            object-fit: cover;
+                            width: 100%;
+                        }
+                    }
+                }
 
                 &:nth-child(3n) {
                     margin-right: 0;

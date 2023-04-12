@@ -6,21 +6,11 @@ const baseUrl = `${import.meta.env.VITE_API_URL}rest/collections/Pacientes`;
 export const createPaciente = defineStore({
     id: 'createPaciente',
     actions: {
-        async register(name, motherName, nascimento, cpf, cns, cep, rua, numero, bairro, cidade, image) {
+        async register(paciente) {
             try {
-                await fetchWrapper.post(`${baseUrl}`, {
-                    name, 
-                    motherName,
-                    nascimento,
-                    cpf, 
-                    cns,
-                    cep,
-                    rua,
-                    numero,
-                    bairro,
-                    cidade,
-                    image
-                })
+                await fetchWrapper.post(`${baseUrl}`, 
+                   paciente
+                )
 
                 alert('Sucesso')
             } catch (error) {

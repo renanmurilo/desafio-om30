@@ -1,6 +1,21 @@
 <script setup>
 import { Form, Field } from 'vee-validate';
 import * as Yup from 'yup';
+import { reactive } from 'vue';
+
+const imagem = reactive({ image: '' });
+
+function handleFileUpload(event) {
+    const file = event.target.files[0];
+    console.log(file);
+
+    const reader = new FileReader();
+    reader.onload = () => {
+        imagem.image = reader.result;
+        // Use a imagem carregada aqui
+    };
+    reader.readAsDataURL(file);
+}
 
 import { storeToRefs } from 'pinia';
 
@@ -27,8 +42,12 @@ const schema = Yup.object().shape({
 function editaPaciente(values, { setErrors }) {
     const editarStore = editarPaciente();
 
+    const paciente = user._object.user;
+    paciente['image'] =
+        imagem.image !== '' ? imagem.image : user._object.user.image;
+
     return editarStore
-        .editar(user._object.user)
+        .editar(paciente)
         .catch((error) => setErrors({ apiError: error }));
 }
 </script>
@@ -39,6 +58,10 @@ function editaPaciente(values, { setErrors }) {
 
         <div class="shell">
             <div class="content__editar__cadastro">
+                <div class="imagem">
+                    <img :src="user.image" alt="" />
+                </div>
+
                 <Form
                     @submit="editaPaciente"
                     :validation-schema="schema"
@@ -77,6 +100,7 @@ function editaPaciente(values, { setErrors }) {
                             name="nascimento"
                             type="text"
                             class="form-control"
+                            v-mask="'00/00/0000'"
                             v-model="user.nascimento"
                             :class="{ 'is-invalid': errors.nascimento }"
                         />
@@ -92,6 +116,7 @@ function editaPaciente(values, { setErrors }) {
                             type="text"
                             class="form-control"
                             v-model="user.cpf"
+                            v-mask="'000.000.000-00'"
                             :class="{ 'is-invalid': errors.cpf }"
                         />
                         <div class="invalid-feedback">{{ errors.cpf }}</div>
@@ -116,6 +141,7 @@ function editaPaciente(values, { setErrors }) {
                             type="text"
                             class="form-control"
                             v-model="user.cep"
+                            v-mask="'00000-000'"
                             :class="{ 'is-invalid': errors.cep }"
                         />
                         <div class="invalid-feedback">{{ errors.cep }}</div>
@@ -171,7 +197,12 @@ function editaPaciente(values, { setErrors }) {
 
                     <div class="form-group">
                         <label>Foto</label>
-                        <Field name="image" type="file" class="form-control" />
+                        <Field
+                            name="image"
+                            @change="handleFileUpload"
+                            type="file"
+                            class="form-control"
+                        />
                     </div>
 
                     <div class="form-group">
@@ -207,8 +238,18 @@ function editaPaciente(values, { setErrors }) {
     }
 
     .content__editar__cadastro {
-        display: flex;
         width: 100%;
+
+        .imagem {
+            width: 12rem;
+            height: 12rem;
+            margin-bottom: 1rem;
+
+            img {
+                object-fit: cover;
+                width: 100%;
+            }
+        }
 
         .editar {
             flex-direction: row;

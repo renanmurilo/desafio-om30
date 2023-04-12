@@ -1,6 +1,7 @@
 <script setup>
 import { Form, Field } from 'vee-validate';
 import * as Yup from 'yup';
+import { reactive } from 'vue';
 
 import { createPaciente } from '@/stores';
 
@@ -17,36 +18,38 @@ const schema = Yup.object().shape({
     cidade: Yup.string().required('estado is required'),
 });
 
+const paciente = reactive({
+    name: '',
+    motherName: '',
+    nascimento: '',
+    cpf: '',
+    cns: '',
+    cep: '',
+    rua: '',
+    numero: '',
+    bairro: '',
+    cidade: '',
+    image: '',
+});
+
+function handleFileUpload(event) {
+    const file = event.target.files[0];
+    console.log(file);
+
+    const reader = new FileReader();
+    reader.onload = () => {
+        paciente.image = reader.result;
+        // Use a imagem carregada aqui
+    };
+    reader.readAsDataURL(file);
+}
+
 function onSubmit(values, { setErrors }) {
     const createStore = createPaciente();
-    const {
-        name,
-        motherName,
-        nascimento,
-        cpf,
-        cns,
-        cep,
-        rua,
-        numero,
-        bairro,
-        cidade,
-        image,
-    } = values;
+    console.log(paciente);
 
     return createStore
-        .register(
-            name,
-            motherName,
-            nascimento,
-            parseInt(cpf),
-            parseInt(cns),
-            parseInt(cep),
-            rua,
-            parseInt(numero),
-            bairro,
-            cidade,
-            image
-        )
+        .register(paciente)
         .catch((error) => setErrors({ apiError: error }));
 }
 </script>
@@ -69,6 +72,7 @@ function onSubmit(values, { setErrors }) {
                             name="name"
                             type="text"
                             class="form-control"
+                            v-model="paciente.name"
                             :class="{ 'is-invalid': errors.name }"
                         />
                         <div class="invalid-feedback">{{ errors.name }}</div>
@@ -80,6 +84,7 @@ function onSubmit(values, { setErrors }) {
                             name="motherName"
                             type="text"
                             class="form-control"
+                            v-model="paciente.motherName"
                             :class="{ 'is-invalid': errors.motherName }"
                         />
                         <div class="invalid-feedback">
@@ -93,6 +98,8 @@ function onSubmit(values, { setErrors }) {
                             name="nascimento"
                             type="text"
                             class="form-control"
+                            v-mask="'00/00/0000'"
+                            v-model="paciente.nascimento"
                             :class="{ 'is-invalid': errors.nascimento }"
                         />
                         <div class="invalid-feedback">
@@ -106,6 +113,8 @@ function onSubmit(values, { setErrors }) {
                             name="cpf"
                             type="text"
                             class="form-control"
+                            v-mask="'000.000.000-00'"
+                            v-model="paciente.cpf"
                             :class="{ 'is-invalid': errors.cpf }"
                         />
                         <div class="invalid-feedback">{{ errors.cpf }}</div>
@@ -117,6 +126,7 @@ function onSubmit(values, { setErrors }) {
                             name="cns"
                             type="text"
                             class="form-control"
+                            v-model="paciente.cns"
                             :class="{ 'is-invalid': errors.cns }"
                         />
                         <div class="invalid-feedback">{{ errors.cns }}</div>
@@ -128,6 +138,8 @@ function onSubmit(values, { setErrors }) {
                             name="cep"
                             type="text"
                             class="form-control"
+                            v-mask="'00000-000'"
+                            v-model="paciente.cep"
                             :class="{ 'is-invalid': errors.cep }"
                         />
                         <div class="invalid-feedback">{{ errors.cep }}</div>
@@ -139,6 +151,7 @@ function onSubmit(values, { setErrors }) {
                             name="rua"
                             type="text"
                             class="form-control"
+                            v-model="paciente.rua"
                             :class="{ 'is-invalid': errors.rua }"
                         />
                         <div class="invalid-feedback">{{ errors.rua }}</div>
@@ -150,6 +163,7 @@ function onSubmit(values, { setErrors }) {
                             name="bairro"
                             type="text"
                             class="form-control"
+                            v-model="paciente.bairro"
                             :class="{ 'is-invalid': errors.bairro }"
                         />
                         <div class="invalid-feedback">{{ errors.bairro }}</div>
@@ -161,6 +175,7 @@ function onSubmit(values, { setErrors }) {
                             name="cidade"
                             type="text"
                             class="form-control"
+                            v-model="paciente.cidade"
                             :class="{ 'is-invalid': errors.cidade }"
                         />
                         <div class="invalid-feedback">{{ errors.cidade }}</div>
@@ -172,6 +187,7 @@ function onSubmit(values, { setErrors }) {
                             name="numero"
                             type="text"
                             class="form-control"
+                            v-model="paciente.numero"
                             :class="{ 'is-invalid': errors.numero }"
                         />
                         <div class="invalid-feedback">{{ errors.numero }}</div>
@@ -179,7 +195,12 @@ function onSubmit(values, { setErrors }) {
 
                     <div class="form-group">
                         <label>Foto</label>
-                        <Field name="image" type="file" class="form-control" />
+                        <Field
+                            name="image"
+                            type="file"
+                            @change="handleFileUpload"
+                            class="form-control"
+                        />
                     </div>
 
                     <div class="form-group">
