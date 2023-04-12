@@ -4,6 +4,7 @@ import * as Yup from 'yup';
 import { reactive, ref } from 'vue';
 import api from '@/api/axios';
 import { useCPF } from '@/utils/ComposableCpf.js';
+import { useCNS } from '@/utils/ComposableCns.js';
 
 import { createPaciente } from '@/stores';
 
@@ -45,11 +46,16 @@ function handleFileUpload(event) {
 }
 
 const cpfDemo = useCPF();
-
 const validCpf = ref(true);
+const cnsUse = useCNS();
+const validCns = ref(true);
 
 function validCPF() {
     validCpf.value = cpfDemo.isValidCPF(paciente.cpf);
+}
+
+function validCNS() {
+    validCns.value = cnsUse.validarCNS(paciente.cns);
 }
 
 async function validarCep() {
@@ -152,9 +158,14 @@ function onSubmit(values, { setErrors }) {
                             type="text"
                             class="form-control"
                             v-model="paciente.cns"
-                            :class="{ 'is-invalid': errors.cns }"
+                            v-mask="'000000000000000'"
+                            @change="validCNS"
+                            :class="{ 'is-invalid': errors.cns || !validCns }"
                         />
                         <div class="invalid-feedback">{{ errors.cns }}</div>
+                        <div class="invalid-feedback" v-if="!validCns">
+                            Cns inválido
+                        </div>
                     </div>
 
                     <div class="form-group">

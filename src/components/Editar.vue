@@ -6,6 +6,7 @@ import api from '@/api/axios';
 import { storeToRefs } from 'pinia';
 import { useUsersStore, editarPaciente } from '@/stores';
 import { useCPF } from '@/utils/ComposableCpf.js';
+import { useCNS } from '@/utils/ComposableCns.js';
 
 const imagem = reactive({ image: '' });
 
@@ -20,11 +21,16 @@ function handleFileUpload(event) {
 }
 
 const cpfDemo = useCPF();
-
 const validCpf = ref(true);
+const cnsUse = useCNS();
+const validCns = ref(true);
 
 function validCPF() {
     validCpf.value = cpfDemo.isValidCPF(user._object.user.cpf);
+}
+
+function validCNS() {
+    validCns.value = cnsUse.validarCNS(user._object.user.cns);
 }
 
 const usersStore = useUsersStore();
@@ -154,9 +160,13 @@ function editaPaciente(values, { setErrors }) {
                             type="text"
                             class="form-control"
                             v-model="user.cns"
-                            :class="{ 'is-invalid': errors.cns }"
+                            @change="validCNS"
+                            :class="{ 'is-invalid': errors.cns || !validCns }"
                         />
                         <div class="invalid-feedback">{{ errors.cns }}</div>
+                        <div class="invalid-feedback" v-if="!validCns">
+                            Cns inválido
+                        </div>
                     </div>
 
                     <div class="form-group">
