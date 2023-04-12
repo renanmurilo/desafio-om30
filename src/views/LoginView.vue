@@ -118,6 +118,7 @@ function onSubmit(values, { setErrors }) {
             border-radius: 0.5rem;
             border: 2px solid $background;
             padding: 0 0.7rem;
+            @include font-roboto(1rem, 400);
 
             &.is-invalid {
                 border-color: $red;

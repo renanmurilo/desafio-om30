@@ -52,145 +52,217 @@ function onSubmit(values, { setErrors }) {
 </script>
 
 <template>
-    <div class="col-md-12">
+    <div class="body__cadastro">
         <h1>Cadastro</h1>
 
-        <Form
-            @submit="onSubmit"
-            :validation-schema="schema"
-            v-slot="{ errors, isSubmitting }"
-            class="col-sm-4 container"
-        >
-            <div class="form-group">
-                <label>Nome Completo*</label>
-                <Field
-                    name="name"
-                    type="text"
-                    class="form-control"
-                    :class="{ 'is-invalid': errors.name }"
-                />
-                <div class="invalid-feedback">{{ errors.name }}</div>
-            </div>
+        <div class="shell">
+            <div class="content__cadastro">
+                <Form
+                    @submit="onSubmit"
+                    :validation-schema="schema"
+                    v-slot="{ errors, isSubmitting }"
+                    class="form__class cadastro"
+                >
+                    <div class="form-group">
+                        <label>Nome Completo*</label>
+                        <Field
+                            name="name"
+                            type="text"
+                            class="form-control"
+                            :class="{ 'is-invalid': errors.name }"
+                        />
+                        <div class="invalid-feedback">{{ errors.name }}</div>
+                    </div>
 
-            <div class="form-group">
-                <label>Nome Completo da Mãe*</label>
-                <Field
-                    name="motherName"
-                    type="text"
-                    class="form-control"
-                    :class="{ 'is-invalid': errors.motherName }"
-                />
-                <div class="invalid-feedback">{{ errors.motherName }}</div>
-            </div>
+                    <div class="form-group">
+                        <label>Nome Completo da Mãe*</label>
+                        <Field
+                            name="motherName"
+                            type="text"
+                            class="form-control"
+                            :class="{ 'is-invalid': errors.motherName }"
+                        />
+                        <div class="invalid-feedback">
+                            {{ errors.motherName }}
+                        </div>
+                    </div>
 
-            <div class="form-group">
-                <label>Data de nascimento*</label>
-                <Field
-                    name="nascimento"
-                    type="text"
-                    class="form-control"
-                    :class="{ 'is-invalid': errors.nascimento }"
-                />
-                <div class="invalid-feedback">{{ errors.nascimento }}</div>
-            </div>
+                    <div class="form-group">
+                        <label>Data de nascimento*</label>
+                        <Field
+                            name="nascimento"
+                            type="text"
+                            class="form-control"
+                            :class="{ 'is-invalid': errors.nascimento }"
+                        />
+                        <div class="invalid-feedback">
+                            {{ errors.nascimento }}
+                        </div>
+                    </div>
 
-            <div class="form-group">
-                <label>CPF*</label>
-                <Field
-                    name="cpf"
-                    type="text"
-                    class="form-control"
-                    :class="{ 'is-invalid': errors.cpf }"
-                />
-                <div class="invalid-feedback">{{ errors.cpf }}</div>
-            </div>
+                    <div class="form-group">
+                        <label>CPF*</label>
+                        <Field
+                            name="cpf"
+                            type="text"
+                            class="form-control"
+                            :class="{ 'is-invalid': errors.cpf }"
+                        />
+                        <div class="invalid-feedback">{{ errors.cpf }}</div>
+                    </div>
 
-            <div class="form-group">
-                <label>CNS*</label>
-                <Field
-                    name="cns"
-                    type="text"
-                    class="form-control"
-                    :class="{ 'is-invalid': errors.cns }"
-                />
-                <div class="invalid-feedback">{{ errors.cns }}</div>
-            </div>
+                    <div class="form-group">
+                        <label>CNS*</label>
+                        <Field
+                            name="cns"
+                            type="text"
+                            class="form-control"
+                            :class="{ 'is-invalid': errors.cns }"
+                        />
+                        <div class="invalid-feedback">{{ errors.cns }}</div>
+                    </div>
 
-            <div class="form-group">
-                <label>Cep*</label>
-                <Field
-                    name="cep"
-                    type="text"
-                    class="form-control"
-                    :class="{ 'is-invalid': errors.cep }"
-                />
-                <div class="invalid-feedback">{{ errors.cep }}</div>
-            </div>
+                    <div class="form-group">
+                        <label>Cep*</label>
+                        <Field
+                            name="cep"
+                            type="text"
+                            class="form-control"
+                            :class="{ 'is-invalid': errors.cep }"
+                        />
+                        <div class="invalid-feedback">{{ errors.cep }}</div>
+                    </div>
 
-            <div class="form-group">
-                <label>Rua*</label>
-                <Field
-                    name="rua"
-                    type="text"
-                    class="form-control"
-                    :class="{ 'is-invalid': errors.rua }"
-                />
-                <div class="invalid-feedback">{{ errors.rua }}</div>
-            </div>
+                    <div class="form-group">
+                        <label>Rua*</label>
+                        <Field
+                            name="rua"
+                            type="text"
+                            class="form-control"
+                            :class="{ 'is-invalid': errors.rua }"
+                        />
+                        <div class="invalid-feedback">{{ errors.rua }}</div>
+                    </div>
 
-            <div class="form-group">
-                <label>Bairro*</label>
-                <Field
-                    name="bairro"
-                    type="text"
-                    class="form-control"
-                    :class="{ 'is-invalid': errors.bairro }"
-                />
-                <div class="invalid-feedback">{{ errors.bairro }}</div>
-            </div>
+                    <div class="form-group">
+                        <label>Bairro*</label>
+                        <Field
+                            name="bairro"
+                            type="text"
+                            class="form-control"
+                            :class="{ 'is-invalid': errors.bairro }"
+                        />
+                        <div class="invalid-feedback">{{ errors.bairro }}</div>
+                    </div>
 
-            <div class="form-group">
-                <label>Cidade*</label>
-                <Field
-                    name="cidade"
-                    type="text"
-                    class="form-control"
-                    :class="{ 'is-invalid': errors.cidade }"
-                />
-                <div class="invalid-feedback">{{ errors.cidade }}</div>
-            </div>
+                    <div class="form-group">
+                        <label>Cidade*</label>
+                        <Field
+                            name="cidade"
+                            type="text"
+                            class="form-control"
+                            :class="{ 'is-invalid': errors.cidade }"
+                        />
+                        <div class="invalid-feedback">{{ errors.cidade }}</div>
+                    </div>
 
-            <div class="form-group">
-                <label>numero*</label>
-                <Field
-                    name="numero"
-                    type="text"
-                    class="form-control"
-                    :class="{ 'is-invalid': errors.numero }"
-                />
-                <div class="invalid-feedback">{{ errors.numero }}</div>
-            </div>
+                    <div class="form-group">
+                        <label>numero*</label>
+                        <Field
+                            name="numero"
+                            type="text"
+                            class="form-control"
+                            :class="{ 'is-invalid': errors.numero }"
+                        />
+                        <div class="invalid-feedback">{{ errors.numero }}</div>
+                    </div>
 
-            <div class="form-group">
-                <label>Foto</label>
-                <Field name="image" type="file" class="form-control" />
-            </div>
+                    <div class="form-group">
+                        <label>Foto</label>
+                        <Field name="image" type="file" class="form-control" />
+                    </div>
 
-            <div class="form-group">
-                <button class="btn btn-primary" :disabled="isSubmitting">
-                    <span
-                        v-show="isSubmitting"
-                        class="spinner-border spinner-border-sm mr-1"
-                    ></span>
-                    Criar Paciente
-                </button>
+                    <div class="form-group">
+                        <button
+                            class="btn btn__primary"
+                            :disabled="isSubmitting"
+                        >
+                            <span
+                                v-show="isSubmitting"
+                                class="spinner-border spinner-border-sm mr-1"
+                            ></span>
+                            Criar Paciente
+                        </button>
+                    </div>
+                    <div
+                        v-if="errors.apiError"
+                        class="alert alert-danger mt-3 mb-0"
+                    >
+                        {{ errors.apiError }}
+                    </div>
+                </Form>
             </div>
-            <div v-if="errors.apiError" class="alert alert-danger mt-3 mb-0">
-                {{ errors.apiError }}
-            </div>
-        </Form>
+        </div>
     </div>
 </template>
 
 <style lang="scss">
+.body__cadastro {
+    width: 100%;
+
+    h1 {
+        text-align: center;
+        @include font-roboto(1.5rem, 700);
+        color: $primary;
+        text-transform: uppercase;
+        margin-bottom: 2rem;
+    }
+
+    .content__cadastro {
+        display: flex;
+        width: 100%;
+
+        .cadastro {
+            flex-direction: row;
+            flex-wrap: wrap;
+            justify-content: space-between;
+
+            @media ($mobile) {
+                justify-content: center;
+            }
+
+            .form-group {
+                width: 30%;
+
+                @media ($mobile) {
+                    width: 100%;
+                }
+
+                label {
+                    @include font-roboto(1rem, 400);
+                    color: $primary;
+                    text-transform: capitalize;
+                    margin-bottom: 0.5rem;
+                }
+
+                .form-control {
+                    height: 2.5rem;
+                    border-radius: 0.5rem;
+                    border: 2px solid $background;
+                    padding: 0 0.7rem;
+                    @include font-roboto(1rem, 400);
+                    color: $primary;
+
+                    &.is-invalid {
+                        border-color: $red;
+                    }
+                }
+
+                .btn__primary {
+                    margin: 2rem 0 0 auto;
+                }
+            }
+        }
+    }
+}
 </style>

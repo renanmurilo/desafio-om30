@@ -35,12 +35,20 @@ header {
         max-width: 70%;
         margin: 2rem auto;
 
+        @media ($mobile) {
+            max-width: 100%;
+        }
+
         .nav-item {
             @include font-roboto(1rem, 400);
             color: $primary;
             margin-right: 1rem;
             text-transform: capitalize;
             letter-spacing: 0.1rem;
+
+            @media ($mobile) {
+                margin-bottom: 1rem;
+            }
 
             &.active {
                 font-weight: 700;

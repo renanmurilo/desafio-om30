@@ -130,7 +130,7 @@ export default {
             margin-bottom: 2rem;
 
             @media ($mobile) {
-                widows: 100%;
+                width: 100%;
             }
 
             .search {
@@ -212,6 +212,19 @@ export default {
                     position: absolute;
                     right: 1rem;
                     bottom: 1rem;
+                }
+            }
+        }
+
+        .empty {
+            width: 100%;
+
+            h2 {
+                @include font-roboto(1.5rem, 700);
+                color: $primary;
+
+                @media ($mobile) {
+                    font-size: 1.25rem;
                 }
             }
         }
