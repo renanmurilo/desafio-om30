@@ -63,44 +63,158 @@ export default {
 
 <template>
     <div class="body__paciente">
-        <h2>Pacientes</h2>
+        <h1>Pacientes</h1>
 
-        <div class="search__pacientes">
-            <form class="search">
-                <input
-                    type="text"
-                    class="field"
-                    placeholder="Pesquisar cliente"
-                    v-model="searchVal"
-                />
+        <div class="shell">
+            <div class="content__paciente">
+                <div class="search__pacientes">
+                    <form class="search">
+                        <input
+                            type="text"
+                            class="field"
+                            placeholder="Pesquisar paciente"
+                            v-model="searchVal"
+                        />
+                    </form>
+                </div>
 
-                <button type="submit" class="btn__search">
-                    <div class="ico__lupa">
-                        <Icon icon="ico-lupa" size="22px" />
+                <div class="inner__paciente" v-if="filteredClients.length">
+                    <div
+                        class="grid"
+                        v-for="(paciente, index) in filteredClients"
+                        :key="index"
+                    >
+                        <h3>{{ paciente.attributes.name }}</h3>
+
+                        <a
+                            @click.stop.prevent="remove(paciente.uid)"
+                            class="remove"
+                        >
+                            <Trash /> <span>Excluir</span>
+                        </a>
+
+                        <a
+                            @click.stop.prevent="editar(paciente.uid)"
+                            class="btn btn__primary"
+                        >
+                            Editar
+                        </a>
                     </div>
-                </button>
-            </form>
-        </div>
+                </div>
 
-        <div class="content__paciente">
-            <div
-                class="grid"
-                v-for="(paciente, index) in filteredClients"
-                :key="index"
-            >
-                <h3>{{ paciente.attributes.name }}</h3>
-
-                <a @click.stop.prevent="remove(paciente.uid)" class="remove">
-                    <Trash />
-                </a>
-
-                <a @click.stop.prevent="editar(paciente.uid)" class="edit">
-                    edit
-                </a>
+                <div class="empty" v-else>
+                    <h2>Não encontramos o paciente: {{ searchVal }}</h2>
+                </div>
             </div>
         </div>
     </div>
 </template>
 
 <style lang="scss">
+.body__paciente {
+    width: 100%;
+
+    h1 {
+        @include font-roboto(1.5rem, 700);
+        color: $primary;
+        text-transform: uppercase;
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+
+    .content__paciente {
+        width: 100%;
+
+        .search__pacientes {
+            width: 18.75rem;
+            margin-bottom: 2rem;
+
+            @media ($mobile) {
+                widows: 100%;
+            }
+
+            .search {
+                position: relative;
+                width: 100%;
+
+                .field {
+                    height: 2.5rem;
+                    border-radius: 0.5rem;
+                    border: 2px solid $background;
+                    padding-left: 0.7rem;
+                    width: 100%;
+                    @include font-roboto(1rem, 400);
+                    color: $primary;
+
+                    &::placeholder {
+                        color: gray;
+                    }
+                }
+            }
+        }
+
+        .inner__paciente {
+            display: flex;
+            flex-wrap: wrap;
+            width: 100%;
+            margin: auto;
+
+            .grid {
+                width: 28%;
+                border: 1px solid $background;
+                height: 150px;
+                padding: 1rem;
+                position: relative;
+                margin-right: 5rem;
+                border-radius: 0.5rem;
+                margin-bottom: 2rem;
+
+                &:nth-child(3n) {
+                    margin-right: 0;
+
+                    @media ($mobile) {
+                        margin: auto auto 1rem;
+                    }
+                }
+
+                @media ($mobile) {
+                    width: 100%;
+                    margin: auto auto 1rem;
+                }
+
+                h3 {
+                    @include font-roboto(1.25rem, 700);
+                    color: $primary;
+                    letter-spacing: 0.1rem;
+                    text-transform: capitalize;
+                }
+
+                .remove {
+                    display: flex;
+                    align-items: center;
+                    position: absolute;
+                    bottom: 1rem;
+                    left: 1rem;
+                    border: 1px solid $red;
+                    border-radius: 0.5rem;
+                    padding: 0.5rem;
+                    color: $red;
+
+                    span {
+                        @include font-roboto(1rem, 400);
+                        color: $red;
+                        margin-left: 0.5rem;
+                    }
+                }
+
+                .btn__primary {
+                    width: 6.25rem;
+                    position: absolute;
+                    right: 1rem;
+                    bottom: 1rem;
+                }
+            }
+        }
+    }
+}
 </style>
